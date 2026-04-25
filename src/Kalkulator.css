@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── Variables ── */
+:root {
+  --bg: #0b1120;
+  --card-bg: rgba(22, 33, 62, 0.65);
+  --card-border: rgba(255, 255, 255, 0.06);
+  --input-bg: rgba(10, 18, 40, 0.6);
+  --input-border: rgba(255, 255, 255, 0.08);
+  --text: #e2e8f0;
+  --text-muted: #64748b;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.12);
+  --accent-glow: rgba(56, 189, 248, 0.35);
+}
+
+/* ── Layout ── */
+.app-wrapper {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* ── Card ── */
+.card {
+  position: relative;
+  z-index: 1;
+  background: var(--card-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--card-border);
+  border-radius: 28px;
+  padding: 44px 36px 36px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.03) inset,
+    0 30px 60px -20px rgba(0, 0, 0, 0.55);
+
+  /* Entry animation */
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  animation: cardEnter 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+@keyframes cardEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Card Header ── */
+.card-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.icon-circle {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.icon-circle:hover {
+  transform: scale(1.08) rotate(5deg);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.card-header h1 {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 400;
+}
+
+/* ── Inputs ── */
+.input-group {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px; /* Reduced margin since button is gone */
+}
+
+.input-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-field label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-left: 4px;
+}
+
+.input-field input {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  color: var(--text);
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  -moz-appearance: textfield;
+}
+
+.input-field input::-webkit-outer-spin-button,
+.input-field input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-field input::placeholder {
+  color: #334155;
+  font-weight: 400;
+}
+
+.input-field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  background: rgba(10, 18, 40, 0.85);
+}
+
+/* ── Loading Indicator ── */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.loading-container.show {
+  max-height: 100px;
+  opacity: 1;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.loading-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* 3 Dots Wave Animation */
+.dot-wave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-top: 30px; /* Ditambahkan agar dot tidak terpotong saat loncat ke atas */
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-6px);
+    opacity: 1;
+    box-shadow: 0 4px 8px var(--accent-glow);
+  }
+}
+
+/* ── Result Card ── */
+.result-card {
+  margin-top: 0;
+  padding: 0 20px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  background: rgba(10, 18, 40, 0.45);
+  border-radius: 18px;
+  border: 1px solid transparent;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.result-card.show {
+  margin-top: 24px;
+  padding: 22px 20px;
+  max-height: 250px;
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.result-label {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 400;
+}
+
+.result-value {
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.result-value.highlight {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.04);
+  margin: 4px 0;
+}
+
+/* ── Responsive Mobile ── */
+@media screen and (max-width: 480px) {
+  .card {
+    padding: 36px 24px 24px;
+    border-radius: 24px;
+  }
+
+  .card-header h1 {
+    font-size: 1.35rem;
+  }
+
+  .subtitle {
+    font-size: 0.82rem;
+  }
+
+  .input-group {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .input-field input {
+    font-size: 1rem;
+    padding: 12px 16px;
+  }
+
+  .result-card.show {
+    padding: 16px 18px;
+    margin-top: 20px;
+  }
+
+  .result-label {
+    font-size: 0.82rem;
+  }
+
+  .result-value {
+    font-size: 1rem;
+  }
+  
+  .result-value.highlight {
+    font-size: 1.1rem;
+  }
+}
